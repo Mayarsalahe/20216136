@@ -6,20 +6,20 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Execute Batch Script') {
+        stage('Execute Shell Script') {
             steps {
                 script {
                     // Print current directory to confirm workspace
                     echo "Current directory is:"
-                    bat 'echo %cd%'
+                    sh 'pwd'
 
                     // List files in the current directory
                     echo "Listing files in the current directory:"
-                    bat 'dir'
+                    sh 'ls -la'
 
-                    // Execute the batch script
+                    // Execute the shell script
                     echo "Executing list_files.sh script:"
-                    def result = bat(script: 'list_files.sh', returnStdout: true).trim()
+                    def result = sh(script: './list_files.sh', returnStdout: true).trim()
 
                     // Print the output to the Jenkins console
                     echo "The result of the script is: \n${result}"
@@ -28,3 +28,4 @@ pipeline {
         }
     }
 }
+
